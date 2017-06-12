@@ -10,6 +10,7 @@ import (
 
 var port = "0.0.0.0:9001"
 
+// ->使用bufio向流中读，然后从流中写出
 func echo(conn net.Conn) {
 	r := bufio.NewReader(conn)
 	for {
@@ -26,6 +27,7 @@ func echo(conn net.Conn) {
 }
 
 func main() {
+	// net直接监听端口
 	l, err := net.Listen("tcp", port)
 	if err != nil {
 		fmt.Println("ERROR", err)
@@ -38,6 +40,7 @@ func main() {
 			fmt.Println("ERROR", err)
 			continue
 		}
-		go echo(conn)
+		go echo(conn) //异步并发
+		//echo(conn) 阻塞 超过一个客户端服务器端都是阻塞状态
 	}
 }
