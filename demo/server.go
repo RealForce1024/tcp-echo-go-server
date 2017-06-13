@@ -46,7 +46,7 @@ func echo(conn net.Conn) {
 		}
 
 		fmt.Println("receive:=>", string(line))
-
+		conn.Write([]byte("server say:=>" + string(line)))
 		switch err {
 		case nil:
 			break

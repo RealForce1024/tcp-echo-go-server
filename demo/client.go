@@ -21,6 +21,8 @@ func main() {
 		return
 	}
 
+	defer conn.Close()
+
 	userInput := bufio.NewReader(os.Stdin)
 	response := bufio.NewReader(conn)
 
