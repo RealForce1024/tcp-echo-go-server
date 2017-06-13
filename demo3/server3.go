@@ -4,7 +4,7 @@
 //
 // This code may not conform to popular Go coding idioms
 
-package main
+package demo3
 
 import (
 	"bufio"

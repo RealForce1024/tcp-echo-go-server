@@ -5,7 +5,7 @@
 //
 // $ nc localhost 3540
 
-package main
+package demo5
 
 import (
 	"net"
