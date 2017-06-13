@@ -8,10 +8,14 @@ import (
 	"io"
 )
 
-var serverPort = ":3545"
+const (
+	CONN_SERVER_HOST = "localhost"
+	CONN_SERVER_PORT = ":3333"
+	CONN_SERVER_TYPE = "tcp"
+)
 
 func main() {
-	conn, err := net.Dial("tcp", serverPort)
+	conn, err := net.Dial(CONN_SERVER_TYPE, CONN_SERVER_HOST+CONN_SERVER_PORT)
 	if err != nil {
 		fmt.Println("connect error:=>", err)
 		return

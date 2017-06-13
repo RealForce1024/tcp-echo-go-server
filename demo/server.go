@@ -8,16 +8,22 @@ import (
 	"os"
 )
 
-var server = "localhost" // if localhost this can be ignore
-var port = ":3545"       // ignore local ip,should add ":"and port
+const (
+	_CONN_HOST = "localhost"
+	_CONN_PORT = ":3333"
+	_CONN_TYPE = "tcp"
+)
 
 func main() {
-	l, err := net.Listen("tcp", port)
-	fmt.Println("server listen at", port)
+	l, err := net.Listen(_CONN_TYPE, _CONN_HOST+_CONN_PORT)
+	fmt.Println("server listen at", _CONN_PORT)
+
 	if err != nil {
 		fmt.Println("error", err)
 		os.Exit(1)
 	}
+
+	defer l.Close()
 
 	for {
 		conn, err := l.Accept()
@@ -26,7 +32,6 @@ func main() {
 			continue
 		}
 		go echo(conn)
-		//go echo2(conn)
 	}
 
 }
@@ -41,6 +46,7 @@ func echo(conn net.Conn) {
 		}
 
 		fmt.Println("receive:=>", string(line))
+
 		switch err {
 		case nil:
 			break
@@ -48,6 +54,7 @@ func echo(conn net.Conn) {
 		default:
 			fmt.Println("eror", err)
 		}
+
 		conn.Write(line)
 	}
 }
@@ -62,6 +69,7 @@ func echo2(c net.Conn) {
 			//fmt.Println("err:", err)
 			return
 		}
+
 		data := buf[:n]
 		fmt.Println("receive:=>", string(data))
 		_, err = c.Write(data)
