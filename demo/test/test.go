@@ -20,9 +20,9 @@ const (
 // 1k->0.07
 // 10k->0.77
 // 30k->2.33
-// 50k->4.06
-// 100k->7.61
-// 1000k->86.468115049
+// 50k->3.79
+// 100k->7.56
+// 1000k->85.468115049
 func main() {
 	conn, err := net.Dial(CONN_SERVER_TYPE, CONN_SERVER_HOST+CONN_SERVER_PORT)
 	if err != nil {
@@ -36,7 +36,7 @@ func main() {
 	//userInput := bufio.NewReader(os.Stdin)
 	response := bufio.NewReader(conn)
 
-		for i := 1; i <= 1000; i++ {
+		for i := 1; i <= 100000; i++ {
 			_, err := conn.Write([]byte("hello from client=>" + strconv.Itoa(i) + "\n"))
 			if err != nil {
 				fmt.Println("error", err)
