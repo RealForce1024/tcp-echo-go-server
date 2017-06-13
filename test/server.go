@@ -30,15 +30,21 @@ func echo2(c net.Conn) {
 	for {
 		buf := make([]byte, 512)
 		n, err := c.Read(buf)
+		//c.SetDeadline(time.Now()) //可以根据具体情况设置超时时间
 		if err != nil {
-			fmt.Println("error:", err)
+			//fmt.Println("err:", err)
+			return
 		}
 		data := buf[:n]
 		fmt.Println("receive:=>", string(data))
 		_, err = c.Write(data)
-		
-		if err != nil {
-			fmt.Println("error:", err)
+		switch err {
+		case nil:
+			//fmt.Println("err:=>", err)
+			break
+		case io.EOF:
+		default:
+			fmt.Println("err:=>", err)
 		}
 	}
 }
