@@ -24,7 +24,7 @@ func main() {
 
 	start := time.Now()
 
-	for i := 1; i <= 3000; i++ {
+	for i := 1; i <= 1000; i++ {
 		conn, err := net.Dial(_CONN_SERVER_TYPE, _CONN_SERVER_HOST+_CONN_SERVER_PORT)
 		response := bufio.NewReader(conn)
 		if err != nil {

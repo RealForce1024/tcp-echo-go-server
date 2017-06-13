@@ -36,23 +36,23 @@ func main() {
 	//userInput := bufio.NewReader(os.Stdin)
 	response := bufio.NewReader(conn)
 
-	for i := 1; i <= 1000000; i++ {
-		_, err := conn.Write([]byte("hello from client=>" + strconv.Itoa(i) + "\n"))
-		if err != nil {
-			fmt.Println("error", err)
-		}
+		for i := 1; i <= 1000; i++ {
+			_, err := conn.Write([]byte("hello from client=>" + strconv.Itoa(i) + "\n"))
+			if err != nil {
+				fmt.Println("error", err)
+			}
 
-		serverLine, err := response.ReadBytes(byte('\n'))
-		switch err {
-		case nil:
-			fmt.Println("server response:=>", string(serverLine))
-		case io.EOF:
-			os.Exit(0)
-		default:
-			fmt.Println("server error:=>", err)
-			os.Exit(2)
+			serverLine, err := response.ReadBytes(byte('\n'))
+			switch err {
+			case nil:
+				fmt.Println(string(serverLine))
+			case io.EOF:
+				os.Exit(0)
+			default:
+				fmt.Println("server error:=>", err)
+				os.Exit(2)
 
+			}
 		}
-	}
 	fmt.Println("总用时:", time.Since(start).Seconds())
 }

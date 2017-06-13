@@ -54,8 +54,7 @@ func echo(conn net.Conn) {
 		default:
 			fmt.Println("eror", err)
 		}
-
-		conn.Write(line)
+		//conn.Write(line)
 	}
 }
 
