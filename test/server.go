@@ -8,11 +8,38 @@ import (
 	"os"
 )
 
+var server = "localhost" // if localhost this can be ignore
+var port = ":3545"       // ignore local ip,should add ":"and port
+
+func main() {
+	l, err := net.Listen("tcp", port)
+	fmt.Println("server listen at", port)
+	if err != nil {
+		fmt.Println("error", err)
+		os.Exit(1)
+	}
+
+	for {
+		conn, err := l.Accept()
+		if err != nil {
+			fmt.Println("err:", err)
+			continue
+		}
+		go echo(conn)
+		//go echo2(conn)
+	}
+
+}
+
 //使用bufio工具类读取
 func echo(conn net.Conn) {
 	r := bufio.NewReader(conn)
 	for {
 		line, err := r.ReadBytes(byte('\n'))
+		if err != nil { // 避免client关闭，server端还继续工作
+			return
+		}
+
 		fmt.Println("receive:=>", string(line))
 		switch err {
 		case nil:
@@ -38,6 +65,7 @@ func echo2(c net.Conn) {
 		data := buf[:n]
 		fmt.Println("receive:=>", string(data))
 		_, err = c.Write(data)
+
 		switch err {
 		case nil:
 			//fmt.Println("err:=>", err)
@@ -47,27 +75,4 @@ func echo2(c net.Conn) {
 			fmt.Println("err:=>", err)
 		}
 	}
-}
-
-var server = "localhost" // if localhost this can be ignore
-var port = ":3545"       // ignore local ip,should add ":"and port
-
-func main() {
-	l, err := net.Listen("tcp", port)
-	fmt.Println("server listen at", port)
-	if err != nil {
-		fmt.Println("error", err)
-		os.Exit(1)
-	}
-
-	for {
-		conn, err := l.Accept()
-		if err != nil {
-			fmt.Println("err:", err)
-			continue
-		}
-		//go echo(conn)
-		go echo2(conn)
-	}
-
 }

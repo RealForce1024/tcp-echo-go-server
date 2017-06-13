@@ -15,6 +15,10 @@ func echo(conn net.Conn) {
 	r := bufio.NewReader(conn)
 	for {
 		line, err := r.ReadBytes(byte('\n'))
+		if err != nil {
+			return
+		}
+		fmt.Println("receive:=>", string(line))
 		switch err {
 		case nil:
 			break

@@ -21,7 +21,7 @@ func main() {
 	response := bufio.NewReader(conn)
 	for {
 		userLine, err := userInput.ReadBytes(byte('\n'))
-		switch err; {
+		switch err {
 		case nil:
 			conn.Write(userLine)
 		case io.EOF:
