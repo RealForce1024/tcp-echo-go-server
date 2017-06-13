@@ -31,9 +31,6 @@ func main() {
 			fmt.Println("error:=>", err)
 			os.Exit(-1)
 		}
-	}
-
-	for {
 
 		serverLine, err := response.ReadBytes(byte('\n'))
 		switch err {
