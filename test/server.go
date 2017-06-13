@@ -8,6 +8,7 @@ import (
 	"os"
 )
 
+//使用bufio工具类读取
 func echo(conn net.Conn) {
 	r := bufio.NewReader(conn)
 	for {
@@ -21,6 +22,24 @@ func echo(conn net.Conn) {
 			fmt.Println("eror", err)
 		}
 		conn.Write(line)
+	}
+}
+
+// 直接从conn流中读取
+func echo2(c net.Conn) {
+	for {
+		buf := make([]byte, 512)
+		n, err := c.Read(buf)
+		if err != nil {
+			fmt.Println("error:", err)
+		}
+		data := buf[:n]
+		fmt.Println("receive:=>", string(data))
+		_, err = c.Write(data)
+		
+		if err != nil {
+			fmt.Println("error:", err)
+		}
 	}
 }
 
@@ -41,7 +60,8 @@ func main() {
 			fmt.Println("err:", err)
 			continue
 		}
-		go echo(conn)
+		//go echo(conn)
+		go echo2(conn)
 	}
 
 }
